@@ -17,15 +17,20 @@ class Election:
         self.results[party] = 0
 
     def run_election(self):
+        print("\n-------------->")
         print("Running Election...")
+        print("-------------->\n")
         for electorate in self.electorates:
             winner = electorate.run_election()
             self.results[winner.party] += 1
 
-        print("\nElection Results:")
+        print("\n---------------")
+        print("Election Results:")
         print("---------------")
         for party, seats in self.results.items():
             print(f"{party.name}: {seats} seats")
+        print(f"Winner: {winner.party}")
+        print("---------------\n")
         return self.results
     
 election = Election()
@@ -33,18 +38,20 @@ election = Election()
 party_a = Party("Right Party")
 party_b = Party("Left Party")
 
-alice = Candidate("Alice", party_a)
-bob = Candidate("Bob", party_b)
+candidate_1 = Candidate("Alice", party_a)
+candidate_2 = Candidate("Bob", party_b)
 
-electorate_1 = Electorate("Menzies", {alice: alice, bob: bob})
+electorate_1 = Electorate("Menzies", {candidate_1: candidate_1, candidate_2: candidate_2})
 
-ballots = [
-    [alice, bob],
-    [bob, alice],
-    [alice, bob],
+ballots_1 = [
+    [candidate_1, candidate_2],
+    [candidate_2, candidate_1],
+    [candidate_1, candidate_2],
+    [candidate_2, candidate_1],
+    [candidate_2, candidate_1],
 ]
 
-electorate_1.distribute_votes(ballots)
+electorate_1.distribute_votes(ballots_1)
 
 election = Election()
 

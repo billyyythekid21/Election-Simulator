@@ -36,6 +36,7 @@ class Electorate:
     def run_election(self):
         irv_round = 1
 
+        print("\n-------------->")
         print(f"Electorate: {self.name}")
 
         while len(self.candidates) > 1:
@@ -47,6 +48,7 @@ class Electorate:
 
         self.winner = list(self.candidates.keys())[0]
         print(f"{self.name}'s winner: {self.winner.name} of {self.winner.party}")
+        print("-------------->\n")
         return self.winner
 
 party_a = Party("Party A")

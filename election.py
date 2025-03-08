@@ -23,19 +23,20 @@ class Election:
             self.results[winner.party] += 1
 
         print("\nElection Results:")
+        print("---------------")
         for party, seats in self.results.items():
             print(f"{party.name}: {seats} seats")
         return self.results
     
 election = Election()
 
-party_a = Party("Party A")
-party_b = Party("Party B")
+party_a = Party("Right Party")
+party_b = Party("Left Party")
 
 alice = Candidate("Alice", party_a)
 bob = Candidate("Bob", party_b)
 
-electorate_1 = Electorate("Electorate 1", {alice: alice, bob: bob})
+electorate_1 = Electorate("Menzies", {alice: alice, bob: bob})
 
 ballots = [
     [alice, bob],

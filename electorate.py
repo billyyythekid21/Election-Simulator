@@ -34,13 +34,16 @@ class Electorate:
                 return candidate
 
     def run_election(self):
+        irv_round = 1
+
         print(f"Electorate: {self.name}")
 
         while len(self.candidates) > 1:
             votes = self.count_votes()
             print(f"Votes: {votes}")
             eliminated_candidate = self.eliminate_candidate()
-            print(f"Eliminated Candidate: {eliminated_candidate.name}")
+            print(f"Eliminated Candidate in Round {irv_round}: {eliminated_candidate.name}")
+            irv_round += 1
 
         self.winner = list(self.candidates.keys())[0]
         print(f"{self.name}'s winner: {self.winner.name} of {self.winner.party}")

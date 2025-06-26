@@ -1,4 +1,3 @@
-import random
 from candidate import Candidate
 from party import Party
 from collections import Counter
@@ -23,20 +22,25 @@ class Electorate:
     def eliminate_candidate(self):
         votes = self.count_votes()
         min_votes = min(votes.values())
-        for candidate, vote_count in votes.items():
-            if vote_count == min_votes:
-                for ballot in candidate.votes:
+        
+        candidates_to_eliminate = [candidate for candidate, vote_count in votes.items() if vote_count == min_votes]
+        
+        for candidate in candidates_to_eliminate:
+            for ballot in candidate.votes:
+                while ballot:
                     ballot.pop(0)
-                    if ballot:
+                    if ballot and ballot[0] in self.candidates:
                         next_pref = ballot[0]
                         self.candidates[next_pref].votes.append(ballot)
-                del self.candidates[candidate]
-                return candidate
+                        break
+
+            del self.candidates[candidate]
+            return candidate
 
     def run_election(self):
         irv_round = 1
 
-        print("\n-------------->")
+        print("\n--------------->")
         print(f"Electorate: {self.name}")
 
         while len(self.candidates) > 1:
@@ -46,25 +50,7 @@ class Electorate:
             print(f"Eliminated Candidate in Round {irv_round}: {eliminated_candidate.name}")
             irv_round += 1
 
-        self.winner = list(self.candidates.keys())[0]
+        self.winner = list(self.candidates.values())[0]
         print(f"{self.name}'s winner: {self.winner.name} of {self.winner.party}")
         print("-------------->\n")
         return self.winner
-
-party_a = Party("Party A")
-party_b = Party("Party B")
-
-candidate_1 = Candidate("Alice", party_a)
-candidate_2 = Candidate("Bob", party_b)
-
-electorate = Electorate("Chisholm", {candidate_1: candidate_1, candidate_2: candidate_2})
-
-ballots = [
-    [candidate_1, candidate_2],
-    [candidate_2, candidate_1],
-    [candidate_1, candidate_2]
-]
-
-electorate.distribute_votes(ballots)
-print(type(electorate.candidates))
-winner = electorate.run_election()
